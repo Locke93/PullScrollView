@@ -20,7 +20,7 @@ public class PullScrollView extends ScrollView {
     /**
      * 回滚的时间
      */
-    private static final int SCROLL_DURATION = 350;
+    private static final int SCROLL_DURATION = 150;
     /**
      * Damping, the smaller the greater the resistance
      */
