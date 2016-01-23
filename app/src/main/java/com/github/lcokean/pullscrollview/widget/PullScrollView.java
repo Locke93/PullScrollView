@@ -14,13 +14,17 @@ import android.widget.ScrollView;
 public class PullScrollView extends ScrollView {
 
     /**
+     * 手指抖动误差
+     */
+    private static final int SHAKE_MOVE_VALUE = 8;
+    /**
      * The max scroll height.
      */
     private static final int MAX_SCROLL_HEIGHT = 400;
     /**
      * 回滚的时间
      */
-    private static final int SCROLL_DURATION = 150;
+    private static final int SCROLL_DURATION = 300;
     /**
      * Damping, the smaller the greater the resistance
      */
@@ -68,11 +72,30 @@ public class PullScrollView extends ScrollView {
         super.onFinishInflate();
     }
 
+    /**
+     * * 继承自ViewGroup * 返回true, 截取触摸事件 * 返回false,
+     * 将事件传递给onTouchEvent()和子控件的dispatchTouchEvent()
+     */
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
-            mTouchY = ev.getY();
+
+        // 判断 点击子控件 or 按住子控件滑动
+        // 如果点击子控件，则返回 false, 子控件响应点击事件
+        // 如果按住子控件滑动，则返回 true, 滑动布局
+        switch (ev.getAction()) {
+            case MotionEvent.ACTION_DOWN: {
+                mTouchY = ev.getY();
+                break;
+            }
+            case MotionEvent.ACTION_MOVE: {
+                float currentY = ev.getY();
+                float scrollY = currentY - mTouchY;
+
+                // 是否返回 true
+                return Math.abs(scrollY) > SHAKE_MOVE_VALUE;
+            }
         }
+        // 默认返回 false
         return super.onInterceptTouchEvent(ev);
     }
 
@@ -134,7 +157,8 @@ public class PullScrollView extends ScrollView {
      * @param y 滚动到的y位置
      */
     private void setScrollTo(int x, int y) {
-        mChildRootView.scrollTo(x, y);
+        mChildRootView.layout(x, y, x + mChildRootView.getWidth(), y + mChildRootView.getHeight());
+        //mChildRootView.scrollTo(x, y);
     }
 
     /**
@@ -144,7 +168,8 @@ public class PullScrollView extends ScrollView {
      * @param y 滚动y位置
      */
     private void setScrollBy(int x, int y) {
-        mChildRootView.scrollBy(x, y);
+        mChildRootView.layout(mChildRootView.getLeft() - x, mChildRootView.getTop() - y, -x + mChildRootView.getRight(), -y + mChildRootView.getBottom());
+        //mChildRootView.scrollBy(x, y);
     }
 
     /**
@@ -153,7 +178,8 @@ public class PullScrollView extends ScrollView {
      * @return 滚动值
      */
     private int getScrollYValue() {
-        return mChildRootView.getScrollY();
+        return mChildRootView.getTop();
+        //return mChildRootView.getScrollY();
     }
 
 

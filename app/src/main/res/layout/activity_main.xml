@@ -24,34 +24,39 @@
                 android:padding="12dp"
                 android:text="Hello World!" />
 
-            <TextView
+            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="12dp"
+                android:onClick="onClick"
                 android:text="Hello World!" />
 
-            <TextView
+            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="12dp"
+                android:onClick="onClick"
                 android:text="Hello World!" />
 
-            <TextView
+            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="12dp"
+                android:onClick="onClick"
                 android:text="Hello World!" />
 
-            <TextView
+            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="12dp"
+                android:onClick="onClick"
                 android:text="Hello World!" />
 
-            <TextView
+            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="12dp"
+                android:onClick="onClick"
                 android:text="Hello World!" />
 
             <TextView
